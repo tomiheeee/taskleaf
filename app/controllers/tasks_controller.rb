@@ -8,16 +8,13 @@ class TasksController < ApplicationController
     @task = Task.new
   end
 
-  def edit
-  end
-
   def create
     @task = current_user.tasks.new(task_params)
 
     if @task.save
     redirect_to tasks_url, notice: "タスク「#{@task.name}」を登録しました。"
     else
-      render :new,
+      render :new
     end
   end
 
@@ -47,4 +44,4 @@ class TasksController < ApplicationController
   def set_task
     @task = current_user.tasks.find(params[:id])
   end
-9end
+end
