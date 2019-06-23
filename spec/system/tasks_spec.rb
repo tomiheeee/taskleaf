@@ -14,20 +14,21 @@ describe 'タスク管理機能' , type: :system do
     click_button 'ログインする'
   end
 
+  shared_examples_for 'ユーザーAが作成したタスクが表示される' do
+    it {expect(page).to have_content '最初のタスク'}
+  end
+
   describe '一覧表示機能' do
     context 'ユーザーAがログインしている時' do
       let(:login_user) {user_a}
 
-      it 'ユーザーAが作成したタスクが表示される' do
-        expect(page).to have_content '最初のタスク'
-      end
+      it_behaves_like 'ユーザーAが作成したタスクが表示される'
     end
 
     context 'ユーザーBがログインしている時' do
       let(:login_user) {user_b}
 
       it 'ユーザーAが作成したタスクが表示されない' do
-        # ユーザーAが作成したタスクの名称が画面上に表示されていないことを確認
         expect(page).to have_no_content '最初のタスク'
       end
     end
@@ -41,9 +42,7 @@ describe 'タスク管理機能' , type: :system do
         visit task_path(task_a)
       end
 
-      it 'ユーザーAが作成したタスクが表示される' do
-        expect(page).to have_content '最初のタスク'
-      end
+      it_behaves_like 'ユーザーAが作成したタスクが表示される'
     end
   end
 end
